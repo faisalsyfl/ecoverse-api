@@ -18,7 +18,8 @@ class Profile extends Model
         'latitude', 'longitude', 'city', 'district', 'village',
         'rw', 'rt', 'avatar_url',
         'accepting_waste', 'processing_withdrawals',
-        'plat_nomor'
+        'plat_nomor',
+        'bank_sampah_id'
     ];
 
     public function user()
