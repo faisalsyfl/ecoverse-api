@@ -10,7 +10,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id('profile_id');
-            // $table->foreignId('user_id')->unique()->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->unique()->constrained('users', 'user_id')->onDelete('cascade');
             $table->decimal('rewards_balance', 10, 2)->default(0.00);
             $table->boolean('is_accepting_orders')->default(false);
             $table->string('group_name')->nullable();

@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt', // Gunakan driver 'jwt' dari Tymon
+            'provider' => 'users',
+        ],
     ],
 
     /*

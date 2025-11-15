@@ -2,49 +2,72 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Contracts\JWTSubject; // Tambahkan ini untuk JWT
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable; 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-
-class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
-    use Authenticatable, Authorizable, HasFactory;
+    use HasFactory;
 
+    // --- Kustomisasi Kita ---
     protected $table = 'users';
     protected $primaryKey = 'user_id';
-    public $timestamps = false; // Karena kita hanya punya created_at
+    public $timestamps = false; // Karena kita hanya punya created_at di migrasi
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var string[]
      */
     protected $fillable = [
-        'full_name', 'phone_number', 'email', 'password_hash', 'role', 'address'
+        'full_name',
+        'phone_number',
+        'email',
+        'password_hash', // <-- Nama kolom password kustom kita
+        'role',
+        'address'
     ];
 
     /**
      * The attributes excluded from the model's JSON form.
-     *
-     * @var string[]
      */
     protected $hidden = [
         'password_hash',
     ];
 
-    // Implementasi untuk JWT
+    /**
+     * BERI TAHU LARAVEL NAMA KOLOM PASSWORD KITA
+     * * Secara default, Laravel mencari kolom 'password'.
+     * Fungsi ini memberitahu Auth::attempt() untuk menggunakan 'password_hash'.
+     */
+    public function getAuthPassword()
+    {
+        return $this->password_hash;
+    }
+
+    // --- Metode untuk JWT ---
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'role' => $this->role
+        ];
+    }
+    
+    public function profile()
+    {
+        // Mendefinisikan relasi one-to-one
+        // (Foreign Key di Profile, Local Key di User)
+        return $this->hasOne(Profile::class, 'user_id', 'user_id');
     }
 }

@@ -11,9 +11,9 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id('transaction_id');
             
-            // $table->foreignId('warga_id')->constrained('users')->onDelete('restrict');
-            // $table->foreignId('kurir_id')->nullable()->constrained('users')->onDelete('set null');
-            // $table->foreignId('bank_sampah_id')->constrained('users')->onDelete('restrict');
+            $table->foreignId('warga_id')->constrained('users','user_id')->onDelete('restrict');
+            $table->foreignId('kurir_id')->nullable()->constrained('users','user_id')->onDelete('set null');
+            $table->foreignId('bank_sampah_id')->constrained('users','user_id')->onDelete('restrict');
             
             $table->enum('method', ['pickup', 'dropoff']);
             $table->enum('status', ['mencari_kurir', 'dijemput', 'diantar', 'selesai', 'dibatalkan']);

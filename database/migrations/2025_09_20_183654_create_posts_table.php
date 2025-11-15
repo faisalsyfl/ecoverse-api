@@ -10,7 +10,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id('post_id');
-            // $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users','user_id')->onDelete('cascade');
             $table->text('content');
             $table->string('image_url', 2048)->nullable();
             $table->timestamp('created_at')->useCurrent();

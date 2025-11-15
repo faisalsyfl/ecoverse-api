@@ -11,8 +11,8 @@ class CreateWithdrawalsTable extends Migration
         Schema::create('withdrawals', function (Blueprint $table) {
             $table->id('withdrawal_id');
 
-            // $table->foreignId('warga_id')->constrained('users')->onDelete('restrict');
-            // $table->foreignId('bank_sampah_id')->constrained('users')->onDelete('restrict');
+            $table->foreignId('warga_id')->constrained('users','user_id')->onDelete('restrict');
+            $table->foreignId('bank_sampah_id')->constrained('users','user_id')->onDelete('restrict');
 
             $table->decimal('amount', 10, 2);
             $table->enum('status', ['diajukan', 'selesai', 'ditolak'])->default('diajukan');

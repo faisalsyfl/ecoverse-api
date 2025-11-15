@@ -16,6 +16,13 @@ class Profile extends Model
     protected $fillable = [
         'user_id', 'rewards_balance', 'is_accepting_orders', 'group_name',
         'latitude', 'longitude', 'city', 'district', 'village',
-        'rw', 'rt', 'avatar_url'
+        'rw', 'rt', 'avatar_url',
+        'accepting_waste', 'processing_withdrawals',
+        'plat_nomor'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
 }
