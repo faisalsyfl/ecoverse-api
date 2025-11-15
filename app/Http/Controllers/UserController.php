@@ -163,7 +163,7 @@ class UserController extends Controller
         
         return response()->json([
             'message' => 'Upload avatar berhasil!',
-            'url' => '/storage/' . $filePath
+            'url' => '/uploads/' . $filePath
         ]);
     }
     /**

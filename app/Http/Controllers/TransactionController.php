@@ -99,7 +99,7 @@ class TransactionController extends Controller
                     'assessed_weights' => $request->assessedWeights,
                     'weight_kg' => $request->totalWeight,
                     'value' => $request->totalRewards,
-                    'photo_url_bank_sampah' => $photoPath ? '/storage/' . $photoPath : null,
+                    'photo_url_bank_sampah' => $photoPath ? '/uploads/' . $photoPath : null,
                 ]);
 
                 $wargaProfile = Profile::where('user_id', $transaction->warga_id)->first();
