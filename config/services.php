@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'onesignal' => [
+        'app_id' => env('ONE_SIGNAL_APP_ID'),
+        'rest_api_key' => env('ONE_SIGNAL_REST_API_KEY'),
+    ],
 
 ];

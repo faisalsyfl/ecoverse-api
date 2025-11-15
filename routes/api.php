@@ -12,6 +12,7 @@ use App\Http\Controllers\WasteTypeController;
 Route::group(['prefix' => 'users'], function () {
     // --- Rute Registrasi Terpisah ---
     Route::post('/register-warga', [UserController::class, 'registerWarga']);
+    Route::post('/player-id', [UserController::class, 'updatePlayerId']);
     Route::post('/register-kurir', [UserController::class, 'registerKurir']);
     Route::post('/register-banksampah', [UserController::class, 'registerBankSampah']);
     Route::get('/bank-sampah', [UserController::class, 'searchBankSampah']);

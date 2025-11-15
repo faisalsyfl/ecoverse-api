@@ -19,7 +19,7 @@ class Profile extends Model
         'rw', 'rt', 'avatar_url',
         'accepting_waste', 'processing_withdrawals',
         'plat_nomor',
-        'bank_sampah_id'
+        'bank_sampah_id','player_id'
     ];
 
     public function user()

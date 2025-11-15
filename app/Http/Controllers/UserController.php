@@ -307,4 +307,20 @@ class UserController extends Controller
             return $this->respondInternalError('Gagal mencari Bank Sampah.');
         }
     }
+    public function updatePlayerId(Request $request)
+    {
+        $data = $this->validate($request, [
+            'player_id' => 'required|string',
+        ]);
+
+        try {
+            $user = Auth::user();
+            $user->profile->update(['player_id' => $data['player_id']]);
+
+            return $this->respondSuccess(null, 'Player ID berhasil disimpan.');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->respondInternalError('Gagal menyimpan Player ID.');
+        }
+    }
 }

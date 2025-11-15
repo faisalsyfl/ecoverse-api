@@ -8,6 +8,7 @@ use App\Traits\ApiResponseTrait; // Trait respons kita
 use Illuminate\Http\Request; // <-- Import Request
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App_Jobs_SendBankSampahStatusNotification; // <-- Import Job
 
 class DashboardController extends Controller
 {
@@ -158,13 +159,19 @@ class DashboardController extends Controller
 
             // 2. Siapkan data untuk di-update (ubah camelCase ke snake_case)
             $updateData = [];
+            $newStatus = $profile->accepting_waste; // Simpan status lama
+
             if (isset($data['acceptingWaste'])) {
                 $updateData['accepting_waste'] = $data['acceptingWaste'];
+                $newStatus = $data['acceptingWaste']; // Ambil status baru
             }
             if (isset($data['processingWithdrawals'])) {
                 $updateData['processing_withdrawals'] = $data['processingWithdrawals'];
             }
 
+            if (isset($data['acceptingWaste'])) {
+                SendBankSampahStatusNotification::dispatch($user->user_id, $newStatus);
+            }
             // 3. Update data di database
             if (!empty($updateData)) {
                 $profile->update($updateData);
