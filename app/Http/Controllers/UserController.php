@@ -323,4 +323,35 @@ class UserController extends Controller
             return $this->respondInternalError('Gagal menyimpan Player ID.');
         }
     }
+    public function getWargaDropoffInfo()
+    {
+        try {
+            $user = Auth::user();
+            $profile = $user->profile;
+
+            if (!$profile || !$profile->bank_sampah_id) {
+                return $this->respondError('Warga tidak terhubung ke Bank Sampah.', 400);
+            }
+
+            // Ambil data profil dari Bank Sampah yang terhubung
+            $bankSampahProfile = Profile::where('user_id', $profile->bank_sampah_id)->first();
+
+            if (!$bankSampahProfile) {
+                 return $this->respondError('Bank Sampah terkait tidak ditemukan.', 404);
+            }
+            
+            // Kirim hanya data yang diperlukan
+            $data = [
+                'group_name' => $bankSampahProfile->group_name,
+                'latitude' => (float) $bankSampahProfile->latitude,
+                'longitude' => (float) $bankSampahProfile->longitude,
+            ];
+            
+            return $this->respondSuccess($data, 'Info drop off berhasil diambil.');
+
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return $this->respondInternalError('Gagal memuat info drop off.');
+        }
+    }
 }

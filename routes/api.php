@@ -31,6 +31,7 @@ Route::group(['prefix' => 'users'], function () {
 Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/warga/dashboard', [DashboardController::class, 'getWargaDashboard']);
     Route::get('/warga/profile', [UserController::class, 'getWargaProfile']); 
+    Route::get('/warga/dropoff-info', [UserController::class, 'getWargaDropoffInfo']); 
     Route::post('/warga/transactions', [TransactionController::class, 'store']);
     Route::get('/warga/history/transactions', [HistoryController::class, 'getTransactionHistory']);
     Route::get('/warga/history/rewards', [HistoryController::class, 'getRewardsHistory']);
