@@ -48,7 +48,7 @@ class TransactionController extends Controller
                 'bank_sampah_id' => $bankSampah->user_id,
                 'method'         => $request->method,
                 'status'         => $status,
-                'photo_url'      => $request->has('photo') ? '/storage/' . $filePath : NULL, 
+                'photo_url'      => $request->has('photo') ? '/uploads/' . $filePath : NULL, 
                 'waste_types'    => $request->wasteTypes,
             ]);
 
