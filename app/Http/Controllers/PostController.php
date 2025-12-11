@@ -80,4 +80,37 @@ class PostController extends Controller
             return $this->respondInternalError('Gagal mengunggah konten.');
         }
     }
+    /**
+     * Mengambil postingan milik user yang sedang login (Tab "Saya").
+     */
+    public function myPosts()
+    {
+        try {
+            $user = Auth::user();
+
+            $posts = Post::with(['user.profile'])
+                ->where('user_id', $user->user_id) // Filter by User ID
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
+            // Gunakan format yang sama dengan fungsi index
+            $formattedPosts = $posts->getCollection()->map(function ($post) {
+                return [
+                    'id' => $post->post_id,
+                    'user_name' => $post->user->full_name,
+                    'location' => $post->user->profile->city ?? 'Indonesia',
+                    'content' => $post->content,
+                    'image_url' => $post->image_url,
+                    'time_ago' => $post->time_ago,
+                    'avatar_url' => $post->user->profile->avatar_url,
+                ];
+            });
+
+            return $this->respondSuccess($formattedPosts);
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return $this->respondInternalError('Gagal memuat postingan saya.');
+        }
+    }
 }

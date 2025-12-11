@@ -48,7 +48,7 @@ class TransactionController extends Controller
                 'bank_sampah_id' => $bankSampah->user_id,
                 'method'         => $request->method,
                 'status'         => $status,
-                'photo_url'      => $request->has('photo') ? '/uploads/' . $filePath : NULL, 
+                'photo_url'      => $request->has('photo') ? '/storage/' . $filePath : NULL, 
                 'waste_types'    => $request->wasteTypes,
             ]);
 
@@ -99,7 +99,7 @@ class TransactionController extends Controller
                     'assessed_weights' => $request->assessedWeights,
                     'weight_kg' => $request->totalWeight,
                     'value' => $request->totalRewards,
-                    'photo_url_bank_sampah' => $photoPath ? '/uploads/' . $photoPath : null,
+                    'photo_url_bank_sampah' => $photoPath ? '/storage/' . $photoPath : null,
                 ]);
 
                 $wargaProfile = Profile::where('user_id', $transaction->warga_id)->first();

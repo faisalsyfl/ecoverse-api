@@ -54,6 +54,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::get('/posts', [PostController::class, 'index']);
     Route::post('/posts', [PostController::class, 'store']);
+    Route::get('/posts/me', [PostController::class, 'myPosts']); // <-- ENDPOINT BARU (Feed Saya)
+
 });
 
 
