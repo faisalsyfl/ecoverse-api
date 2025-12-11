@@ -8,6 +8,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\HistoryController; 
 use App\Http\Controllers\WithdrawalController; 
 use App\Http\Controllers\WasteTypeController; 
+use App\Http\Controllers\PostController; 
 
 Route::group(['prefix' => 'users'], function () {
     // --- Rute Registrasi Terpisah ---
