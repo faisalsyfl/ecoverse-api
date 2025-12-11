@@ -50,6 +50,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/bank-sampah/waste-types/{id}', [WasteTypeController::class, 'show']); // <-- BARU
     Route::patch('/bank-sampah/waste-types/{id}', [WasteTypeController::class, 'update']); // <-- BARU
     Route::delete('/bank-sampah/waste-types/{id}', [WasteTypeController::class, 'destroy']); // <-- BARU
+
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::post('/posts', [PostController::class, 'store']);
 });
 
 
